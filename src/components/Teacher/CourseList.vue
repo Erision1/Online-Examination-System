@@ -58,18 +58,8 @@ const courseStore = useCourseStore();
 onMounted(() => {
     courseStore.fetchCourses();
 });
-// const courses = computed(() => courseStore.courses);
-// 创建一个默认的课程列表
-const courses = ref([{
-    id: 1,
-    name: 'Vue基础',
-    description: '这是一门关于Vue的课程'
-},
-{
-    id: 2,
-    name: 'React基础',
-    description: '这是一门关于React的课程'
-}]);
+const courses = computed(() => courseStore.courses);
+
 
 const searchQuery = ref('');
 const pageSize = ref(10);

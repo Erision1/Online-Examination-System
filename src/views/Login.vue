@@ -42,6 +42,7 @@ const login = async () => {
     return;
   }
   try {
+    // await store.login('/api/login', username.value, password.value, identity.value);
     await store.login(username.value, password.value, identity.value);
     if (store.isLoggedIn) {
       ElMessage.success('登录成功！');

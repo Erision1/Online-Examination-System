@@ -1,84 +1,72 @@
 <template>
-    <div class="student-info-card">
-      <h2>个人信息</h2>
-      <form @submit.prevent="saveInfo">
-        <div class="form-group">
-          <label for="name">姓名:</label>
-          <input type="text" id="name" v-model="student.name" required class="form-control" disabled>
-        </div>
-        <div class="form-group">
-          <label for="gender">性别:</label>
-          <select id="gender" v-model="student.gender" class="form-control" disabled>
-            <option value="男">男</option>
-            <option value="女">女</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="phone">手机号:</label>
-          <input type="tel" id="phone" v-model="student.phone" required class="form-control">
-        </div>
-        <div class="form-group">
-          <label for="studentId">学号：</label>
-          <input type="text" id="studentId" v-model="student.id" class="form-control" disabled>
-        </div>
-        <div class="form-group">
-          <label for="college">学院:</label>
-          <input type="text" id="college" v-model="student.college" required class="form-control">
-        </div>
-        <div class="form-group">
-          <label for="courses">课程:</label>
-          <input type="text" id="courses" v-model="courseInput" placeholder="添加课程" class="form-control">
-          <button type="button" @click="addCourse" class="btn btn-secondary">添加课程</button>
-        </div>
-        <div class="courses-list">
-          <h3>已选课程:</h3>
-          <ul>
-            <li v-for="(course, index) in student.courses" :key="index">{{ course }}</li>
-          </ul>
-        </div>
-        <button type="submit" class="btn btn-primary">保存</button>
-      </form>
-    </div>
+  <div class="student-info-card">
+    <h2>个人信息</h2>
+    <form @submit.prevent="saveInfo">
+      <div class="form-group">
+        <label for="name">姓名:</label>
+        <input type="text" id="name" v-model="student.name" required class="form-control" disabled>
+      </div>
+      <div class="form-group">
+        <label for="gender">性别:</label>
+        <select id="gender" v-model="student.gender" class="form-control" disabled>
+          <option value="男">男</option>
+          <option value="女">女</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="phone">手机号:</label>
+        <input type="tel" id="phone" v-model="student.phone" required class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="studentId">学号：</label>
+        <input type="text" id="studentId" v-model="student.id" class="form-control" disabled>
+      </div>
+      <div class="form-group">
+        <label for="college">学院:</label>
+        <input type="text" id="college" v-model="student.college" required class="form-control">
+      </div>
+      <div class="form-group">
+        <label>可选课程:</label>
+        <ul>
+          <li v-for="(course, index) in availableCourses" :key="course.id" class="course-item">
+            <input type="checkbox" :id="`course-${course.id}`" :value="course" v-model="student.courses">
+            <label :for="`course-${course.id}`">{{ index + 1 }}. {{ course.name }} - {{ course.description }}</label>
+          </li>
+        </ul>
+      </div>
+      <div class="courses-list">
+        <h3>已选课程:</h3>
+        <ul>
+          <li v-for="(course, index) in student.courses" :key="index">{{ course.name }}</li>
+        </ul>
+      </div>
+      <button type="submit" class="btn btn-primary">保存</button>
+    </form>
+  </div>
 </template>
   
 <script setup>
 import { ref } from 'vue';
-import axios from 'axios';
+import { useCourseStore } from '@/store/useCourseStore';
+import { useAuthStore } from '@/store/useAuthStore';
 
-const props = defineProps({
-    student: Object
-});
+const authStore = useAuthStore();
+const courseStore = useCourseStore();
+const student = ref(authStore.user);
 
-const student = ref( props.student || {
-    name: '张三',
-    gender: '男',
-    phone: '13612345678',
-    id: '20210001',
-    college: '信息科学与技术学院',
-    courses: ['数据结构', '计算机网络', '操作系统'] 
-});
-
-const courseInput = ref('');
+const availableCourses = ref(courseStore.fetchMockCourses());
 const emits = defineEmits(['update:student']);
 
-function addCourse() {
-  if (courseInput.value.trim() !== '') {
-    student.value.courses.push(courseInput.value.trim());
-    courseInput.value = ''; // 清空输入框
-  }
-}
-
 function saveInfo() {
-  axios.post('/api/students', student.value) //需要完善
-   .then(res => {
-      console.log(res);
-      emits('update:student', student.value);
-      alert('保存成功');
-    })
-   .catch(err => {
-      console.error(err);
-      alert('保存失败');
-    });
+  try {
+    // const response = await axios.put('/api/teacher/update', teacher.value);
+    authStore.updateUser(student.value);
+    console.log(response.data);
+    alert('保存成功');
+  } catch (err) {
+    console.error(err);
+    alert('保存失败');
+  }
 };
 </script>
 
@@ -178,5 +166,15 @@ label {
 .courses-list li:hover { 
     width: 50%;   
     background-color: #f8f9fa;
+}
+.course-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.course-item input[type="checkbox"] {
+  margin-right: 5px;
 }
 </style>

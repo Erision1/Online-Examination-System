@@ -37,51 +37,18 @@
 </template>
   
 <script setup>
-import { onMounted } from 'vue';
+// import { onMounted } from 'vue';
 import { useAuthStore } from '@/store';
 
 const authStore = useAuthStore();
 const teacher = authStore.user;
 
-
-// // 获取用户信息
-// // 获取用户信息
-// async function getTeacherInfo() {
-//   try {
-//     const response = await this.$axios.get(`teacher/select/${authStore.user.username}`);  
-//     const {code, data, msg } = response.data;
-//     console.log(response.data);
-//     const successMsg = "请求成功！！你今天也很棒！！！".trim();
-//     const receivedMsg = msg.trim();
-//     if (code === 100 && data && receivedMsg === successMsg) {
-//         // 处理课程数据格式，将后端返回的course转换为数组形式赋给courses
-//         const adaptedData = {
-//             name: data.name || '',
-//             gender: data.gender || '',
-//             phone: data.phone || '',
-//             id: data.employeeId || '',  // 这里注意前端用的是id属性接收employeeId的值
-//             college: data.college || '',
-//             courses: data.courses || ''
-//         };
-//         // 直接更新teacher对象的属性，避免重复赋值
-//         teacher.value = {
-//          ...teacher.value,
-//          ...adaptedData
-//         };
-//     } else {
-//         // 根据后端返回的不同情况给出更具体的提示
-//         alert(`获取信息失败，原因：${msg}`);
-//     }
-//   } catch (err) {
-//     console.error(err);
-//     alert('网络异常，获取用户信息失败，请检查网络连接');
-//   }
-// }
-
 // 保存用户信息
 async function saveInfo() {
   try {
-    const response = await this.$api.put(`teacher/select/${authStore.user.username}`, teacher.value);
+    // const response = await axios.put('/api/teacher/update', teacher.value);
+    authStore.updateUser(teacher.value);
+    console.log(response.data);
     alert('保存成功');
   } catch (err) {
     console.error(err);
@@ -93,26 +60,28 @@ async function saveInfo() {
 
 <style scoped>
 .teacher-info-card {
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 600px;
-    margin: 20px auto;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 20px auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-    margin: 20px;
-    text-align: center;
+  margin: 20px;
+  text-align: center;
 }
+
 form {
-    position: relative;
-    left: 20%;
+  position: relative;
+  left: 20%;
 }
 
 label {
-    width: 75px;
+  width: 75px;
 }
+
 .form_group {
   margin-bottom: 15px;
   display: flex;

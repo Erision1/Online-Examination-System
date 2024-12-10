@@ -1,6 +1,5 @@
 // src/stores/useExamStore.js
 import { defineStore } from 'pinia';
-
 export const useExamStore = defineStore('exam', {
   state: () => ({
     examDetails: "期中考试", //考试详情
@@ -19,8 +18,8 @@ export const useExamStore = defineStore('exam', {
   actions: {
     async fetchQuestions() {
       // 假设后端提供了获取考题的API
-      const response = await fetch('/api/exam/questions');
-      this.questions = response.json();
+      // const response = await fetch('/api/exam/questions');
+      // this.questions = response.json();
       this.totalQuestions = this.questions.length;
       this.correctAnswers = this.questions.map(question => question.answer);
     },
@@ -48,8 +47,9 @@ export const useExamStore = defineStore('exam', {
     },
     async fetchExamDetails(examId) {
         try {
-          const response = await fetch(`/api/exams/${examId}`);
-          this.examDetails = response.json();
+          // const response = await fetch(`/api/exams/${examId}`);
+          // this.examDetails = response.json();
+          
        } catch (error) {
           console.error('Failed to fetch exam details:', error);
         }

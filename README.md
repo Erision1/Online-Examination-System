@@ -1,5 +1,5 @@
-<<<<<<< HEAD
-# Online-examination-system
+
+# Online-Examination-System
 
 This template should help get you started developing with Vue 3 in Vite.
 
@@ -28,6 +28,3 @@ npm run dev
 ```sh
 npm run build
 ```
-=======
-# Online-Examination-System
->>>>>>> 1482ee7f7b5fadab39df5b117becc0fa57d03aae

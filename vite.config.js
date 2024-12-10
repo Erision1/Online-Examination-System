@@ -3,7 +3,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
-import Components from 'unplugin-vue-components/vite'
+
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -11,8 +11,11 @@ export default defineConfig({
     vue(),
     vueDevTools(), //导入vite-plugin-vue-devtools
   ],
+  // sever: {
+  //     mocks:true, //开启mock功能
+  // },
   resolve: {
-    alias: {
+    alias: { 
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },

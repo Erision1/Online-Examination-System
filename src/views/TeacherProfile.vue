@@ -2,7 +2,6 @@
 import Navigation from '../components/Navigation.vue';
 import Sidebar from '../components/Sidebar.vue';
 import InfoCard from '../components/Teacher/InfoCard.vue';
-// import Exam from '@/components/Student/Exam.vue'
 
 </script>
 <template>
