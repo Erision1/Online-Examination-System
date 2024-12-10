@@ -82,7 +82,8 @@ const menu = computed(() => {
     { label: '个人中心', path: '/student/profile', icon: User },
     { label: '考试', path: '/student/courses', icon: Notebook },
   ];
-  return user.value.identity === '老师' ? teacherItems : studentItems;
+  // return user.value.identity === '老师' ? teacherItems : studentItems;
+  return user.value.identity === '老师' ? teacherItems : studentItems;  
 });
 
 const handleSelect = (index) => {

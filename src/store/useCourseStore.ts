@@ -70,6 +70,7 @@ export const useCourseStore = defineStore('courses', {
   actions: {
     async fetchMockCourses() {
       this.courses = Object.values(MOCK_COURSES);
+      console.log('Mock courses:', this.courses);
     },
     async fetchCourses() {
       try {

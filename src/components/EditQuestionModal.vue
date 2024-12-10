@@ -5,10 +5,11 @@
       <div>
         <label for="type">题目类型:</label>
         <select id="type" v-model="question.type">
-          <option value="1">单选题</option>
-          <option value="2">多选题</option>
-          <option value="3">判断题</option>
-          <option value="4">填空题</option>
+          <option value="单选题">单选题</option>
+          <option value="多选题">多选题</option>
+          <option value="判断题">判断题</option>
+          <option value="填空题">填空题</option>
+          <option value="主观题">主观题</option>
         </select>
       </div>
 
